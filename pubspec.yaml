@@ -28,8 +28,27 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter:
+  flutter: 
     sdk: flutter
+  flutter_localizations: 
+    sdk: flutter
+  flutter_bloc: ^8.0.0
+  connectivity_plus: ^2.3.6
+  shared_preferences: ^2.0.15
+  cached_network_image: ^3.2.1
+  flutter_svg: ^1.1.6
+  equatable: ^2.0.0
+  flutter_login_facebook: ^1.6.2
+  google_sign_in: ^5.0.7
+  carousel_slider: ^4.0.0
+  smooth_page_indicator: ^1.0.0+2
+  intl: ^0.18.1
+  dio: ^5.0.3
+  url_launcher: 6.0.20
+  http: ^0.13.6
+  oauth1: ^2.0.0
+  # carousel_pro: ^1.0.0
+  # dio: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -57,6 +76,36 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  # assets: 
+  #   - assets/
+  #   - assets/images/
+  # fonts: 
+  #   - family: Lato
+  #     fonts: 
+  #       - asset: assets/fonts/LatoRegular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/LatoBold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/LatoSemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/LatoMedium.ttf
+  #         weight: 500
+  #   - family: Montserrat
+  #     fonts: 
+  #       - asset: assets/fonts/MontserratRegular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/MontserratRomanSemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/MontserratMedium.ttf
+  #         weight: 500
+  #   - family: Playfair Display
+  #     fonts: 
+  #       - asset: assets/fonts/PlayfairDisplayRomanMedium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/PlayfairDisplayRomanRegular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/PlayfairDisplayRomanBold.ttf
+  #         weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:
