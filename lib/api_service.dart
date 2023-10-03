@@ -6,6 +6,7 @@ import 'package:first_flutter_app/models/customer.dart';
 import 'package:first_flutter_app/models/category.dart';
 
 import 'package:dio/dio.dart';
+import 'package:first_flutter_app/models/product.dart';
 // import 'package:flutter/foundation.dart';
 
 class APIService {
@@ -41,7 +42,7 @@ class APIService {
 
     try {
       String url =
-          "${Config.url}${Config.categoryUrl}?consumer_key=${Config.key}&consumer_secret=${Config.secret}";
+          "${Config.url}${Config.categoryUrl}?${Config.credentials}&per_page=100";
       var response = await Dio().get(url,
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
@@ -52,7 +53,77 @@ class APIService {
             )
             .toList();
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
+      print(e.response);
+    }
+
+    return data;
+  }
+
+  Future<List<Product>> getProducts() async {
+    List<Product> data = [];
+
+    try {
+      String url =
+          "${Config.url}${Config.productUrl}?${Config.credentials}&per_page=100";
+      var response = await Dio().get(url,
+          options: Options(
+              headers: {HttpHeaders.contentTypeHeader: "application/json"}));
+      if (response.statusCode == 400) {
+        data = response.data;
+      }
+    } on DioException catch (e) {
+      print(e.response);
+    }
+
+    return data;
+  }
+
+  Future<List<Product>> getProductsByTag({
+    int? pageNumber,
+    int? pageSize,
+    String? strSearch,
+    String? tagName,
+    String? categoryId,
+    String? sortBy,
+    String? sortOrder = 'asc',
+  }) async {
+    List<Product> data = [];
+
+    try {
+      String parameter = "";
+
+      if (strSearch != null) {
+        parameter += "&search=$strSearch";
+      }
+      if (pageSize != null) {
+        parameter += "$parameter&per_page=$pageSize";
+      }
+      if (pageNumber != null) {
+        parameter += "$parameter&page=$pageNumber";
+      }
+      if (tagName != null) {
+        parameter += "$parameter&tag=$tagName";
+      }
+      if (categoryId != null) {
+        parameter += "$parameter&category=$categoryId";
+      }
+      if (sortBy != null) {
+        parameter += "$parameter&orderby=$sortBy";
+      }
+      if (sortOrder != null) {
+        parameter += "$parameter&order=$sortOrder";
+      }
+
+      String url =
+          "${Config.url}${Config.productUrl}?${Config.credentials}&${parameter.toString()}";
+      var response = await Dio().get(url,
+          options: Options(
+              headers: {HttpHeaders.contentTypeHeader: "application/json"}));
+      if (response.statusCode == 400) {
+        data = response.data;
+      }
+    } on DioException catch (e) {
       print(e.response);
     }
 

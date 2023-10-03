@@ -1,5 +1,5 @@
 class Category {
-  int? categoryId;
+  int categoryId = 0;
   String? categoryName;
   String? categoryDescription;
   int? parentCategoryId;
@@ -7,7 +7,7 @@ class Category {
   // Image? categoryImage;
 
   Category({
-    this.categoryId,
+    required this.categoryId,
     this.categoryDescription,
     this.categoryName,
     // this.categoryImage,

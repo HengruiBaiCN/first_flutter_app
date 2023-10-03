@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:first_flutter_app/widgets/widget_home_categories.dart';
+import 'package:first_flutter_app/widgets/widget_home_products.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _DashboardPageState extends State<DashboardPage> {
           children: [
             imageCarousel(context),
             WidgetCategories(),
+            // WidgetHomeProducts(labelName: "Top Products", tagId: "top"),
           ],
         ),
       ),

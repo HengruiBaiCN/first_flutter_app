@@ -2,6 +2,7 @@
 
 import 'package:first_flutter_app/api_service.dart';
 import 'package:first_flutter_app/models/category.dart';
+import 'package:first_flutter_app/pages/product_page.dart';
 import 'package:flutter/material.dart';
 
 class WidgetCategories extends StatefulWidget {
@@ -13,11 +14,13 @@ class WidgetCategories extends StatefulWidget {
 
 class _WidgetCategoriesState extends State<WidgetCategories> {
   APIService apiService = APIService();
+  late Future<List> categories;
 
   @override
   void initState() {
     super.initState();
     apiService = APIService();
+    categories = apiService.getCategories();
   }
 
   @override
@@ -47,42 +50,22 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
     );
   }
 
-  // Future<List<Map<String, dynamic>>> fetchAndParseCategories() async {
-  //   final response = await WooCommerceService().fetchCategories();
-
-  //   // List<Category> data = [];
-
-  //   if (response is Map<String, dynamic>) {
-  //     // Handle the map structure here and extract the list of products
-  //     // data.addAll(response);
-  //     print('response has categories ${response}');
-  //     final categoryList = response as List<dynamic>;
-  //     return categoryList.cast<Map<String, dynamic>>().toList();
-  //   } else {
-  //     // Handle the case where the response is not as expected
-  //     print('response does not have categories');
-  //     throw Exception('Unexpected API response format');
-  //   }
-  // }
-
   Widget _categoryList() {
     // print('entering category list');
     return FutureBuilder<dynamic>(
-      future: apiService.getCategories(),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return _buildCategoryList(snapshot.data);
-        } else if (snapshot.data == null) {
-          return const Text('No data found');
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          print(snapshot.data);
-          return const Text('No data');
+      future: categories,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Text('No data found');
+        } else {
+          return _buildCategoryList(snapshot.data);
         }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
       },
     );
   }
@@ -98,40 +81,51 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           var data = categories[index];
-          return Column(
-            children: [
-              Container(
-                height: 100,
-                width: 100,
-                margin: const EdgeInsets.all(10),
-                alignment: Alignment.center,
-                child: Text(data.categoryName.toString()),
-                // child: Image.network(
-                //   data.categoryImage.toString(),
-                //   height: 80,
-                // ),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(0, 5),
-                      blurRadius: 15,
-                    ),
-                  ],
+          return GestureDetector(
+            onTap: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProductPage(categoryId: data.categoryId)))
+              // Navigator.pushNamed(context, '/category',
+              //     arguments: {'id': data.categoryId, 'name': data.categoryName})
+            },
+            child: Column(
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  margin: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  // child: Image.network(
+                  //   data.categoryImage.toString(),
+                  //   height: 80,
+                  // ),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0, 5),
+                        blurRadius: 15,
+                      ),
+                    ],
+                  ),
+                  child: Text(data.categoryName.toString()),
                 ),
-              ),
-              Row(
-                children: [
-                  Text(data.categoryName.toString()),
-                  const Icon(
-                    Icons.keyboard_arrow_right,
-                    size: 14,
-                  )
-                ],
-              )
-            ],
+                Row(
+                  children: [
+                    Text(data.categoryName.toString()),
+                    const Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 14,
+                    )
+                  ],
+                )
+              ],
+            ),
           );
         },
       ),
