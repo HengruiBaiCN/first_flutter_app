@@ -1,5 +1,5 @@
 class Category {
-  int categoryId = 0;
+  int categoryId = 0; //TODO: change to null safety
   String? categoryName;
   String? categoryDescription;
   int? parentCategoryId;
