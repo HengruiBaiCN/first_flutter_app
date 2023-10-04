@@ -16,7 +16,7 @@ class SortBy {
 class ProductPage extends BasePage {
   ProductPage({Key? key, required this.categoryId}) : super(key: key);
 
-  int categoryId = 0;
+  int categoryId;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -36,7 +36,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
   void initState() {
     super.initState();
     apiService = APIService();
-    products = apiService.getProducts();
+    products = apiService.getProductsByTag(categoryId: widget.categoryId);
   }
 
   @override
@@ -62,6 +62,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
             child: Text('Error'),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          print(widget.categoryId);
           return const Center(child: Text('No products found'));
         } else {
           return _buildProductList(snapshot.data!);

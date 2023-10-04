@@ -8,5 +8,4 @@ class Config {
   static String categoryUrl = "products/categories/";
 
   static String productUrl = "products/";
-  // static String
 }

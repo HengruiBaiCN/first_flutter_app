@@ -13,6 +13,7 @@ class FormHelper {
     required Widget suffixIcon,
   }) {
     return TextFormField(
+      // ignore: unnecessary_null_comparison
       initialValue: initialValue != null ? initialValue.toString() : "",
       decoration: fieldDecoration(
         context,

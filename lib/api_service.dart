@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:first_flutter_app/config.dart';
 import 'package:first_flutter_app/models/customer.dart';
@@ -88,7 +89,7 @@ class APIService {
     int? pageSize,
     String? strSearch,
     String? tagName,
-    String? categoryId,
+    int? categoryId,
     String? sortBy,
     String? sortOrder = 'asc',
   }) async {
@@ -119,15 +120,18 @@ class APIService {
         parameter += "$parameter&order=$sortOrder";
       }
 
-      String url =
-          "${Config.url}${Config.productUrl}?${Config.credentials}&${parameter.toString()}";
-      var response = await Dio().get(url,
-          options: Options(
-              headers: {HttpHeaders.contentTypeHeader: "application/json"}));
-      if (response.statusCode == 400) {
-        data = response.data;
+      String url = "${Config.url}products?$parameter&${Config.credentials}";
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        // print('object');
+        data = (json.decode(response.body) as List)
+            .map(
+              (i) => Product.fromJson(i),
+            )
+            .toList();
       }
     } on DioException catch (e) {
+      print('entering dio exception');
       print(e.response);
     }
 
