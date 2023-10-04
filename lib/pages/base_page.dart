@@ -19,7 +19,7 @@ class BasePageState<T extends BasePage> extends State<T> {
   }
 
   Widget pageUI() {
-    return const Placeholder();
+    return Placeholder();
   }
 
   PreferredSizeWidget _buildAppBar() {

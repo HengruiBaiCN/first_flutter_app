@@ -12,6 +12,7 @@ class SortBy {
   SortBy({required this.value, required this.text, required this.sortOrder});
 }
 
+// ignore: must_be_immutable
 class ProductPage extends BasePage {
   ProductPage({Key? key, required this.categoryId}) : super(key: key);
 
@@ -61,7 +62,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
             child: Text('Error'),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Text('No data found');
+          return const Center(child: Text('No products found'));
         } else {
           return _buildProductList(snapshot.data!);
         }
@@ -94,19 +95,20 @@ class _ProductPageState extends BasePageState<ProductPage> {
       child: Row(
         children: [
           const Flexible(
+              child: Material(
             child: TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(9.0)),
                   borderSide: BorderSide.none,
                 ),
                 fillColor: Color(0xffe6e6ec),
                 filled: true,
               ),
             ),
-          ),
+          )),
           const SizedBox(
             width: 15,
           ),

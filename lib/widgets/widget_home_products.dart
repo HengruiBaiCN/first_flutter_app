@@ -4,6 +4,7 @@ import 'package:first_flutter_app/models/product.dart';
 import '../api_service.dart';
 
 class WidgetHomeProducts extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   WidgetHomeProducts({Key? key, required this.labelName, required this.tagId})
       : super(key: key);
 
@@ -119,7 +120,7 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
                 width: 130,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  data.name!,
+                  data.name,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white,

@@ -1,10 +1,11 @@
 import 'package:first_flutter_app/models/product.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
-  ProductCard({Key? key, this.data}) : super(key: key);
+  ProductCard({Key? key, required this.data}) : super(key: key);
 
-  Product? data;
+  Product data;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class ProductCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: const Stack(
+        child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
             Column(
@@ -36,37 +37,39 @@ class ProductCard extends StatelessWidget {
                     child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.red,
+                    const CircleAvatar(
+                      radius: 120,
+                      backgroundColor: Color.fromARGB(255, 103, 193, 207),
                     ),
-                    // Image.network(
-                    //   data!.images![0].length > 0
-                    //       ? data!.images![0].src
-                    //       : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
-                    //   height: 160,
-                    // ) //TODO: add image here
+                    Image.network(
+                      data.images!.isNotEmpty
+                          ? data.images![0].src
+                          : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
+                      height: 160,
+                    )
                   ],
                 )),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  'Error', //TODO: add product name here
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
+                Center(
+                  child: Text(
+                    data.name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '\$0.00', //TODO: add product regular price here
-                      style: TextStyle(
+                      '\$${data.price}',
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
@@ -74,12 +77,12 @@ class ProductCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      '\$0.00', //TODO: add product sale price here
-                      style: TextStyle(
+                      '\$${data.salePrice}',
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,

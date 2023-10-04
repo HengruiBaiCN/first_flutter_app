@@ -26,7 +26,7 @@ class APIService {
       if (response.statusCode == 201) {
         ret = true;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response?.statusCode == 404) {
         ret = false;
       } else {
@@ -69,8 +69,12 @@ class APIService {
       var response = await Dio().get(url,
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
-      if (response.statusCode == 400) {
-        data = response.data;
+      if (response.statusCode == 200) {
+        data = (response.data as List)
+            .map(
+              (i) => Product.fromJson(i),
+            )
+            .toList();
       }
     } on DioException catch (e) {
       print(e.response);

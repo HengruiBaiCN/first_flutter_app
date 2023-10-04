@@ -1,10 +1,10 @@
 class Product {
   int? id;
-  String? name;
+  String name;
   String? description;
   String? shortDescription;
   String? sku;
-  String? price;
+  String price;
   String? regularPrice;
   String? salePrice;
   String? stockStatus;
@@ -13,11 +13,11 @@ class Product {
 
   Product(
       {this.id,
-      this.name,
+      required this.name,
       this.description,
       this.shortDescription,
       this.sku,
-      this.price,
+      required this.price,
       this.regularPrice,
       this.salePrice,
       this.stockStatus,
