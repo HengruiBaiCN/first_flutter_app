@@ -1,4 +1,4 @@
-import 'package:first_flutter_app/utils/ProgressHUD.dart';
+import 'package:first_flutter_app/utils/progress_hud.dart';
 import 'package:flutter/material.dart';
 
 class BasePage extends StatefulWidget {
@@ -14,23 +14,23 @@ class BasePageState<T extends BasePage> extends State<T> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: ProgressHUD(inAsyncCall: isAPICallProcess, child: pageUI()),
+      body: ProgressHud(inAsyncCall: isAPICallProcess, child: pageUI()),
     );
   }
 
   Widget pageUI() {
-    return Placeholder();
+    return const Placeholder();
   }
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       centerTitle: true,
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 0, 221, 255),
       automaticallyImplyLeading: true,
       title: const Text(
         "Dilkara",
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
       ),
       actions: [
         IconButton(

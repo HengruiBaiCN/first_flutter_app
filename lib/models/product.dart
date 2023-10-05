@@ -8,7 +8,7 @@ class Product {
   String? regularPrice;
   String? salePrice;
   String? stockStatus;
-  List<ProductImages>? images;
+  List<ProductImages> images;
   List<Categories>? categories;
 
   Product(
@@ -21,7 +21,7 @@ class Product {
       this.regularPrice,
       this.salePrice,
       this.stockStatus,
-      this.images,
+      required this.images,
       this.categories});
 
   Product.fromJson(Map<String, dynamic> json)

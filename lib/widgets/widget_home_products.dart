@@ -112,7 +112,7 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
                   ],
                 ),
                 child: Image.network(
-                  data.images![0].src,
+                  data.images[0].src,
                   height: 120,
                 ),
               ),

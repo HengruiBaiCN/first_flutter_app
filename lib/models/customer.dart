@@ -1,13 +1,13 @@
 class CustomerModel {
   String email;
-  String first_name;
-  String last_name;
+  String firstName;
+  String lastName;
   String password;
 
   CustomerModel(
       {required this.email,
-      required this.first_name,
-      required this.last_name,
+      required this.firstName,
+      required this.lastName,
       required this.password});
 
   Map<String, dynamic> toJson() {
@@ -15,8 +15,8 @@ class CustomerModel {
 
     map.addAll({
       'email': email,
-      'first_name': first_name,
-      'last_name': last_name,
+      'first_name': firstName,
+      'last_name': lastName,
       'password': password,
       'username': email,
     });

@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var _index = 0;
+    var value = 0;
     return Scaffold(
       appBar: _buildAppBar(),
       bottomNavigationBar: BottomNavigationBar(
@@ -53,10 +53,10 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.shifting,
-        currentIndex: _index,
-        onTap: (index) => setState(() => _index = index),
+        currentIndex: value,
+        onTap: (index) => setState(() => value = index),
       ),
-      body: _widgetList[_index],
+      body: _widgetList[value],
     );
   }
 

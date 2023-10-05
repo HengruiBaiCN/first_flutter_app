@@ -39,10 +39,10 @@ class _ProductPageState extends BasePageState<ProductPage> {
     products = apiService.getProductsByTag(categoryId: widget.categoryId);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return _productList();
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return _productList();
+  // }
 
   @override
   Widget pageUI() {
@@ -62,7 +62,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
             child: Text('Error'),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          print(widget.categoryId);
+          // print(widget.categoryId);
           return const Center(child: Text('No products found'));
         } else {
           return _buildProductList(snapshot.data!);
@@ -131,9 +131,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
                 return _sortByOptions.map((option) {
                   return PopupMenuItem(
                     value: option,
-                    child: Container(
-                      child: Text(option.text),
-                    ),
+                    child: Text(option.text),
                   );
                 }).toList();
               },

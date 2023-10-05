@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProgressHUD extends StatelessWidget {
+class ProgressHud extends StatelessWidget {
   final Widget child;
   final bool inAsyncCall;
   final double opacity;
   final Color color;
   final Animation<Color>? valueColor;
 
-  const ProgressHUD({
+  const ProgressHud({
     Key? key,
     required this.child,
     required this.inAsyncCall,
