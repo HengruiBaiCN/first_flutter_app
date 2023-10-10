@@ -29,26 +29,29 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFE0E0E0),
+      color: const Color.fromARGB(255, 255, 255, 255),
       child: Column(
         children: [
-          const Row(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 10, top: 4),
                 child: Text(
-                  'Top Products',
+                  'BEST SELLERS',
                   // widget.labelName ?? 'Top Products',
                   // widget.labelName, A value of type 'Null' can't be assigned to a parameter of type 'String' in a const constructor.
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10, top: 4),
                 child: Text(
-                  'View All',
-                  style: TextStyle(fontSize: 20, color: Colors.blue),
+                  'Featured Products',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ],

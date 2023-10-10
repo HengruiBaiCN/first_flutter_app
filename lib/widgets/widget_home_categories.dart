@@ -26,7 +26,7 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: const Color.fromARGB(255, 170, 170, 170),
       child: Column(children: [
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,7 +41,7 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
                 padding: EdgeInsets.only(left: 10, top: 4),
                 child: Text(
                   'View All',
-                  style: TextStyle(fontSize: 20, color: Colors.blue),
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 )),
           ],
         ),
@@ -72,7 +72,7 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
 
   Widget _buildCategoryList(List<Category> categories) {
     return Container(
-      height: 150,
+      height: 130,
       alignment: Alignment.center,
       child: ListView.builder(
         shrinkWrap: true,
@@ -94,8 +94,8 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
             child: Column(
               children: [
                 Container(
-                  height: 100,
-                  width: 100,
+                  height: 80,
+                  width: 80,
                   margin: const EdgeInsets.all(10),
                   alignment: Alignment.center,
                   // child: Image.network(

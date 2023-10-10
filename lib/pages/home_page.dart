@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       automaticallyImplyLeading: false,
       title: const Text(
         "Dilkara",
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(

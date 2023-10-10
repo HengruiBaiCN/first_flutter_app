@@ -93,6 +93,7 @@ class APIService {
     String? strSearch,
     String? tagName,
     int? categoryId,
+    int? tagId,
     String? sortBy,
     String? sortOrder = 'asc',
   }) async {
@@ -116,6 +117,9 @@ class APIService {
       if (categoryId != null) {
         parameter += "$parameter&category=$categoryId";
       }
+      if (tagId != null) {
+        parameter += "$parameter&tag=$tagId";
+      }
       if (sortBy != null) {
         parameter += "$parameter&orderby=$sortBy";
       }
@@ -135,6 +139,25 @@ class APIService {
       }
     } on DioException catch (e) {
       print('entering dio exception');
+      print(e.response);
+    }
+
+    return data;
+  }
+
+  Future<List<Category>> getMedias() async {
+    List<Category> data = [];
+
+    try {
+      String url =
+          "${Config.url}${Config.mediaUrl}?${Config.credentials}&per_page=100";
+      var response = await Dio().get(url,
+          options: Options(
+              headers: {HttpHeaders.contentTypeHeader: "application/json"}));
+      if (response.statusCode == 200) {
+        return json.decode(response.data);
+      }
+    } on DioException catch (e) {
       print(e.response);
     }
 
