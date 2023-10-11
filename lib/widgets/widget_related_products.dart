@@ -1,21 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:first_flutter_app/api_service.dart';
 import 'package:first_flutter_app/models/product.dart';
+import 'package:flutter/material.dart';
 
-import '../api_service.dart';
-
-class WidgetHomeProducts extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  WidgetHomeProducts({Key? key, required this.labelName, required this.tagId})
+// ignore: must_be_immutable
+class WidgetRelatedProducts extends StatefulWidget {
+  WidgetRelatedProducts({Key? key, required this.labelName, this.products})
       : super(key: key);
 
-  final String? labelName;
-  final String tagId;
+  final String labelName;
+  List<int>? products;
 
   @override
-  State<WidgetHomeProducts> createState() => _WidgetHomeProductsState();
+  State<WidgetRelatedProducts> createState() => _WidgetRelatedProductsState();
 }
 
-class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
+class _WidgetRelatedProductsState extends State<WidgetRelatedProducts> {
   APIService apiService = APIService();
   late Future<List<Product>> products;
 
@@ -23,13 +22,7 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
   void initState() {
     super.initState();
     apiService = APIService();
-    products = apiService.getProductsByTag(tagName: widget.tagId);
-  }
-
-  List<Product> getTopProducts(int count) {
-    List<Product> sortedProducts = List.from(products as Iterable)
-      ..sort((a, b) => b.quantity.compareTo(a.quantity));
-    return sortedProducts.take(count).toList();
+    products = apiService.getProductsByTag(relatedIds: widget.products);
   }
 
   @override
@@ -37,30 +30,19 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
     return Container(
       color: const Color.fromARGB(255, 255, 255, 255),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 10, top: 4),
-                child: Text(
-                  'BEST SELLERS',
-                  // widget.labelName ?? 'Top Products',
-                  // widget.labelName, A value of type 'Null' can't be assigned to a parameter of type 'String' in a const constructor.
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 10, top: 4),
-                child: Text(
-                  'Featured Products',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+            ),
+            child: Text(
+              widget.labelName,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
           ),
           _productList(),
         ],
@@ -81,7 +63,12 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
             child: Text('Error'),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Text('No data found');
+          return const Text('Zero Products related to this product',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.green,
+                fontWeight: FontWeight.w600,
+              ));
         } else {
           return _buildProductList(snapshot.data!);
         }
@@ -95,7 +82,7 @@ class _WidgetHomeProductsState extends State<WidgetHomeProducts> {
       child: ListView.builder(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
-        scrollDirection: Axis.vertical,
+        scrollDirection: Axis.horizontal,
         itemCount: products.length,
         itemBuilder: (context, index) {
           var data = products[index];

@@ -94,6 +94,7 @@ class APIService {
     String? tagName,
     int? categoryId,
     int? tagId,
+    List<int>? relatedIds,
     String? sortBy,
     String? sortOrder = 'asc',
   }) async {
@@ -106,25 +107,28 @@ class APIService {
         parameter += "&search=$strSearch";
       }
       if (pageSize != null) {
-        parameter += "$parameter&per_page=$pageSize";
+        parameter += "&per_page=$pageSize";
       }
       if (pageNumber != null) {
-        parameter += "$parameter&page=$pageNumber";
+        parameter += "&page=$pageNumber";
       }
       if (tagName != null) {
-        parameter += "$parameter&tag=$tagName";
+        parameter += "&tag=$tagName";
       }
       if (categoryId != null) {
-        parameter += "$parameter&category=$categoryId";
+        parameter += "&category=$categoryId";
       }
       if (tagId != null) {
-        parameter += "$parameter&tag=$tagId";
+        parameter += "&tag=$tagId";
+      }
+      if (relatedIds != null) {
+        parameter += "&include=${relatedIds.join(',').toString()})}";
       }
       if (sortBy != null) {
-        parameter += "$parameter&orderby=$sortBy";
+        parameter += "&orderby=$sortBy";
       }
       if (sortOrder != null) {
-        parameter += "$parameter&order=$sortOrder";
+        parameter += "&order=$sortOrder";
       }
 
       String url = "${Config.url}products?$parameter&${Config.credentials}";
@@ -141,7 +145,6 @@ class APIService {
       print('entering dio exception');
       print(e.response);
     }
-
     return data;
   }
 

@@ -26,7 +26,7 @@ class _WidgetCategoriesState extends State<WidgetCategories> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 170, 170, 170),
+      color: Color.fromARGB(255, 255, 255, 255),
       child: Column(children: [
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

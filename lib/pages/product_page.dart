@@ -65,7 +65,7 @@ class _ProductPageState extends BasePageState<ProductPage> {
           // print(widget.categoryId);
           return const Center(child: Text('No products found'));
         } else {
-          print(widget.categoryId);
+          // print(widget.categoryId);
           return _buildProductList(snapshot.data!);
         }
       },

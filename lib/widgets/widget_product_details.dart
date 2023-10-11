@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:first_flutter_app/models/product.dart';
+import 'package:first_flutter_app/utils/custom_stepper.dart';
+import 'package:first_flutter_app/utils/expand_text.dart';
+import 'package:first_flutter_app/widgets/widget_related_products.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
@@ -24,12 +27,13 @@ class ProductDetailsWidget extends StatelessWidget {
                   height: 20,
                 ),
                 Visibility(
+                    visible: false,
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(color: Colors.red),
-                        child: Text(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(color: Colors.red),
+                        child: const Text(
                           'Sale',
                           style: TextStyle(
                               color: Colors.white,
@@ -37,11 +41,95 @@ class ProductDetailsWidget extends StatelessWidget {
                               fontSize: 12),
                         ),
                       ),
-                    ),
-                    visible:
-                        false), // false for now because we dont have on sale products
+                    )), // false for now because we dont have on sale products
                 const SizedBox(
                   height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      data.name,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    Text(
+                      '\$${data.price}',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    data.stockStatus == 'instock' && data.quantity > 0
+                        ? CustomStepper(
+                            lowerLimit: 0,
+                            upperLimit: data.quantity,
+                            stepValue: 1,
+                            iconSize: 20.0,
+                            value: 0,
+                            onChanged: (value) {
+                              // print(value);
+                              // setState(() {
+                              //   this.data.quantity = value;
+                              // });
+                            },
+                          )
+                        : const Text(
+                            'Out of Stock',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                    TextButton(
+                      onPressed: () => {},
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                      child: const Text(
+                        'Add to Cart',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                ExpandText(
+                  labelHeader: 'Product Details',
+                  description: data.description,
+                  shortDescription: data.shortDescription,
+                ),
+                // Text(
+                //   parse(parse(data.description).body!.text)
+                //       .documentElement!
+                //       .text,
+                //   style: const TextStyle(
+                //       color: Colors.black,
+                //       fontWeight: FontWeight.normal,
+                //       fontSize: 16),
+                // ),
+                const Divider(),
+                const SizedBox(
+                  height: 5,
+                ),
+                WidgetRelatedProducts(
+                  labelName: 'Related Products',
+                  products: data.relatedIds,
                 ),
               ],
             ),

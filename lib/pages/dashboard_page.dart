@@ -33,8 +33,17 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ),
             imageCarousel(context),
+            const SizedBox(
+              height: 10,
+            ),
             WidgetHomeProducts(labelName: "Top Products", tagId: "top"),
+            const SizedBox(
+              height: 10,
+            ),
             shopCollection(context),
+            const SizedBox(
+              height: 10,
+            ),
             WidgetCategories(),
           ],
         ),

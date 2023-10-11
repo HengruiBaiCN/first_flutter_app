@@ -47,6 +47,8 @@ dependencies:
   url_launcher: 6.0.20
   http: ^0.13.6
   oauth1: ^2.0.0
+  html: ^0.15.0
+  flutter_html: ^3.0.0-beta.2
   # carousel_pro: ^1.0.0
   # dio: ^4.0.0
 
