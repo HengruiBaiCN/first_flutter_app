@@ -9,4 +9,8 @@ class Config {
 
   static String productUrl = "products/";
   static String mediaUrl = "media/";
+
+  static String cartUrl = "cart/";
+  static String addToCartUrl = "add_to_cart/";
+  static String userID = "5";
 }

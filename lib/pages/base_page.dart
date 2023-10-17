@@ -1,5 +1,7 @@
 import 'package:first_flutter_app/utils/progress_hud.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:first_flutter_app/provider/loader_provider.dart';
 
 class BasePage extends StatefulWidget {
   const BasePage({Key? key}) : super(key: key);
@@ -12,10 +14,23 @@ class BasePageState<T extends BasePage> extends State<T> {
   bool isAPICallProcess = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: ProgressHud(inAsyncCall: isAPICallProcess, child: pageUI()),
+    return Consumer<LoaderProvider>(
+      builder: (context, loaderProvider, child) {
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: ProgressHud(
+            opacity: 0.3,
+            inAsyncCall: loaderProvider.isLoading,
+            child: pageUI(),
+          ),
+        );
+      },
     );
+
+    // Scaffold(
+    //   appBar: _buildAppBar(),
+    //   body: ProgressHud(inAsyncCall: isAPICallProcess, child: pageUI()),
+    // );
   }
 
   Widget pageUI() {

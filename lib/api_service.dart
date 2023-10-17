@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'dart:io';
 // import 'package:flutter/material.dart';
+import 'package:first_flutter_app/models/cart_request_model.dart';
+import 'package:first_flutter_app/models/cart_response_model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:first_flutter_app/config.dart';
@@ -148,22 +150,64 @@ class APIService {
     return data;
   }
 
-  Future<List<Category>> getMedias() async {
-    List<Category> data = [];
+  // Future<List<Category>> getMedias() async {
+  //   List<Category> data = [];
+
+  //   try {
+  //     String url =
+  //         "${Config.url}${Config.mediaUrl}?${Config.credentials}&per_page=100";
+  //     var response = await Dio().get(url,
+  //         options: Options(
+  //             headers: {HttpHeaders.contentTypeHeader: "application/json"}));
+  //     if (response.statusCode == 200) {
+  //       return json.decode(response.data);
+  //     }
+  //   } on DioException catch (e) {
+  //     print(e.response);
+  //   }
+
+  //   return data;
+  // }
+
+  Future<CartResponseModel?> addToCart(CartRequestModel requestModel) async {
+    requestModel.userId = int.parse(Config.userID);
+
+    final response = await http.post(
+      Uri.parse(Config.url + Config.addToCartUrl),
+      body: requestModel.toJson(),
+      headers: {
+        'Content-Type': 'application/json',
+        // Add other necessary headers, like authorization
+      },
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return CartResponseModel.fromJson(json.decode(response.body));
+    } else {
+      print('Error adding product to cart: ${response.body}');
+      return null;
+    }
+  }
+
+  Future<CartResponseModel> getCartItems() async {
+    CartResponseModel responseModel = CartResponseModel(
+      status: '',
+      data: [],
+    );
 
     try {
-      String url =
-          "${Config.url}${Config.mediaUrl}?${Config.credentials}&per_page=100";
+      String url = Config.url + Config.userID + Config.credentials;
+
       var response = await Dio().get(url,
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
       if (response.statusCode == 200) {
-        return json.decode(response.data);
+        responseModel = CartResponseModel.fromJson(response.data);
       }
     } on DioException catch (e) {
       print(e.response);
     }
 
-    return data;
+    return responseModel;
   }
 }

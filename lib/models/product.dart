@@ -1,5 +1,5 @@
 class Product {
-  int? id;
+  int id;
   String name;
   String description;
   String shortDescription;
@@ -14,7 +14,7 @@ class Product {
   List<int>? relatedIds = <int>[];
 
   Product(
-      {this.id,
+      {required this.id,
       required this.name,
       required this.description,
       required this.shortDescription,

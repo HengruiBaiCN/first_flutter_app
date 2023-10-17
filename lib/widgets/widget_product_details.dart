@@ -1,14 +1,21 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:first_flutter_app/models/cart_request_model.dart';
 import 'package:first_flutter_app/models/product.dart';
+import 'package:first_flutter_app/provider/cart_provider.dart';
+import 'package:first_flutter_app/provider/loader_provider.dart';
 import 'package:first_flutter_app/utils/custom_stepper.dart';
 import 'package:first_flutter_app/utils/expand_text.dart';
 import 'package:first_flutter_app/widgets/widget_related_products.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ProductDetailsWidget extends StatelessWidget {
   ProductDetailsWidget({Key? key, required this.data}) : super(key: key);
 
   final Product data;
+
+  late CartProducts cartProducts;
   final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
@@ -76,6 +83,7 @@ class ProductDetailsWidget extends StatelessWidget {
                             iconSize: 20.0,
                             value: 0,
                             onChanged: (value) {
+                              cartProducts.quantity = value;
                               // print(value);
                               // setState(() {
                               //   this.data.quantity = value;
@@ -90,20 +98,36 @@ class ProductDetailsWidget extends StatelessWidget {
                                 fontSize: 16),
                           ),
                     TextButton(
-                      onPressed: () => {},
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                      ),
-                      child: const Text(
-                        'Add to Cart',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    )
+                        onPressed: () => {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            Provider.of<LoaderProvider>(context, listen: false)
+                                .setIsLoading(true);
+                            var cartProvider = Provider.of<CartProvider>(
+                                context,
+                                listen: true);
+
+                            cartProducts.productId = data.id;
+                            cartProvider.addToCart(cartProducts, (val) {
+                              Provider.of<LoaderProvider>(context,
+                                      listen: false)
+                                  .setIsLoading(false);
+                              print(val);
+                            });
+                          },
+                          child: const Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ))
                   ],
                 ),
                 const SizedBox(
