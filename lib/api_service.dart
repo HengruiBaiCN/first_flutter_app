@@ -169,24 +169,30 @@ class APIService {
   //   return data;
   // }
 
-  Future<CartResponseModel?> addToCart(CartRequestModel requestModel) async {
-    requestModel.userId = int.parse(Config.userID);
+  Future<CartResponseModel?> addToCart(CartRequestModel model) async {
+    model.userId = int.parse(Config.userID);
 
-    final response = await http.post(
-      Uri.parse(Config.url + Config.addToCartUrl),
-      body: requestModel.toJson(),
-      headers: {
-        'Content-Type': 'application/json',
-        // Add other necessary headers, like authorization
-      },
-    );
+    CartResponseModel cartResponseModel;
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return CartResponseModel.fromJson(json.decode(response.body));
-    } else {
-      print('Error adding product to cart: ${response.body}');
+    try {
+      var response = await Dio().post(
+          Config.storeUrl + Config.cartUrl + Config.addToCartUrl,
+          data: model.toJson(),
+          options: Options(
+              headers: {HttpHeaders.contentTypeHeader: "application/json"}));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        cartResponseModel = CartResponseModel.fromJson(response.data);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error adding product to cart: $e');
+      print(Config.storeUrl + Config.cartUrl + Config.addToCartUrl);
       return null;
     }
+
+    return cartResponseModel;
   }
 
   Future<CartResponseModel> getCartItems() async {
@@ -196,7 +202,7 @@ class APIService {
     );
 
     try {
-      String url = Config.url + Config.userID + Config.credentials;
+      String url = Config.storeUrl + Config.userID + Config.credentials;
 
       var response = await Dio().get(url,
           options: Options(

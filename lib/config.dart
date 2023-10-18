@@ -4,6 +4,7 @@ class Config {
   static String credentials = 'consumer_key=$key&consumer_secret=$secret';
   static String token = "";
   static String url = "https://dilkara.com.au/wp-json/wc/v3/";
+  static String storeUrl = "https://dilkara.com.au/wp-json/wc/store/v1/";
   static String custormerUrl = "customers/";
   static String categoryUrl = "products/categories/";
 
@@ -11,6 +12,6 @@ class Config {
   static String mediaUrl = "media/";
 
   static String cartUrl = "cart/";
-  static String addToCartUrl = "add_to_cart/";
-  static String userID = "5";
+  static String addToCartUrl = "add-item/";
+  static String userID = "1";
 }

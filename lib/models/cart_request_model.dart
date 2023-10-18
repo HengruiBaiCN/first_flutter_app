@@ -1,5 +1,5 @@
 class CartRequestModel {
-  int userId = 0;
+  late int userId;
   List<CartProducts> cartProducts = [];
 
   CartRequestModel({required this.userId, required this.cartProducts});

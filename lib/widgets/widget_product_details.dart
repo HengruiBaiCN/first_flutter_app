@@ -15,7 +15,7 @@ class ProductDetailsWidget extends StatelessWidget {
 
   final Product data;
 
-  late CartProducts cartProducts;
+  CartProducts cartProducts = CartProducts(productId: 0, quantity: 0);
   final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,8 @@ class ProductDetailsWidget extends StatelessWidget {
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.redAccent,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
+                              borderRadius: BorderRadius.circular(30)),
+                          fixedSize: const Size(150, 55),
                         ),
                         child: TextButton(
                           onPressed: () {
@@ -110,10 +111,11 @@ class ProductDetailsWidget extends StatelessWidget {
                                 .setIsLoading(true);
                             var cartProvider = Provider.of<CartProvider>(
                                 context,
-                                listen: true);
+                                listen: false);
 
                             cartProducts.productId = data.id;
                             cartProvider.addToCart(cartProducts, (val) {
+                              print('cartprovider is ready');
                               Provider.of<LoaderProvider>(context,
                                       listen: false)
                                   .setIsLoading(false);

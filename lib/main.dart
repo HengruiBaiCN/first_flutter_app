@@ -1,6 +1,6 @@
 import 'package:first_flutter_app/pages/base_page.dart';
 import 'package:first_flutter_app/pages/home_page.dart';
-import 'package:first_flutter_app/pages/product_details.dart';
+// import 'package:first_flutter_app/pages/product_details.dart';
 import 'package:first_flutter_app/provider/cart_provider.dart';
 import 'package:first_flutter_app/provider/loader_provider.dart';
 import 'package:flutter/material.dart';

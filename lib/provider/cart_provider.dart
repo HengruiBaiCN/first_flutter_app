@@ -22,7 +22,7 @@ class CartProvider with ChangeNotifier {
 
   void addToCart(CartProducts product, Function callback) async {
     CartRequestModel requestModel =
-        CartRequestModel(userId: 0, cartProducts: []);
+        CartRequestModel(userId: 1, cartProducts: []);
 
     if (_items.isEmpty) resetStreams();
 
@@ -44,6 +44,9 @@ class CartProvider with ChangeNotifier {
         }
       }
     }
+
+    print(
+        'requestModel.cartProducts isEmpty is: ${requestModel.cartProducts.isEmpty}');
 
     await apiService.addToCart(requestModel).then((cartResponseModel) {
       if (cartResponseModel?.status == 'success' &&
